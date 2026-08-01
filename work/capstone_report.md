@@ -36,6 +36,8 @@ The learned model demonstrated stronger predictive performance than the baseline
 
 The resulting output is a ranked review queue intended to support human content-review decisions rather than automate them.
 
+This case study addresses FlyRank’s challenge of prioritizing which pages to refresh when content inventories are large and editorial resources limited. By modeling observable signals like traffic growth and content age, we provide a decision‑support tool for editors
+
 ## 2.Problem Statement
 
 Organizations often manage large content inventories but have limited resources available for review.
