@@ -1,1 +1,13 @@
-https://sujinoven.github.io/flyrank_internship/
+1.Why does AI alignment matters to me:
+
+
+Honestly got into this because AI is already making calls that affect people, and most of the failures I've seen aren't "evil robot," they're "the system did exactly what it was rewarded for, and that turned out to be the wrong thing."
+What worries me isn't AI being capable — it's AI being capable and us not being able to tell if it's doing what we think it's doing.
+I care about this because I don't want to be one of the people who shipped something powerful and just hoped it'd be fine.
+
+2. Direction I picked: Neural Empathy as an Alignment Technique:
+
+Picked this one because it's not just "add more rules" — it's trying to change something structural about how the model represents itself vs. others, which feels closer to actually fixing the problem instead of patching symptoms.
+My critique: the deception numbers dropping that much (73.6% → 17.2%) makes me suspicious. If you make a model's self-representation and other-representation blur together, some of that "less deception" could just be the model getting worse at understanding that other people know less than it does — not becoming more honest. I'd want to see it tested against something that checks whether it still understands other people's perspectives accurately, not just whether it lies less.
+What I'd extend: instead of blurring self/other everywhere, only do it for the "does this hurt someone" part — keep the model's ability to track what other people believe or want fully intact, and just overlap the part where it registers harm. Basically copy the part of empathy that's about caring, not the part where you literally can't tell others' minds apart from your own.
+What I'd want to try next: don't just test if this reduces the specific kind of deception it was trained on — test if it generalizes to deception it wasn't trained against, like a model quietly underperforming on an eval instead of outright lying. If it holds up there too, that's a sign this is actually touching something real instead of just overfitting to the training setup.
