@@ -28,7 +28,7 @@ A Decision-Support Approach for Content Review Prioritization
 
 This project investigates how observable search and engagement signals can be used to prioritize content review opportunities.
 
-A rule-based baseline and a Random Forest model were developed using the FlyRank ML Internship dataset.
+A rule-based baseline and a Random Forest classifier were developed using the FlyRank ML Internship dataset.
 
 The model was evaluated against the baseline on the same validation framework.
 
@@ -73,7 +73,7 @@ FlyRank ML Internship Dataset
 - target-derived fields  
 - future-window measurements  
 
-Only public-safe and observable signals were used.
+The analysis excluded direct client identifiers, URLs, private queries, target-derived variables, and future-window measurements. Modeling was restricted to the approved search-performance, engagement, and content-level features required for the analysis.
 
 ## 4. Methodology
 
@@ -112,7 +112,8 @@ For the baseline, I used a simple heuristic: rank pages by their **raw traffic c
 **Performance numbers (on same split as model):**  
 - Accuracy: 62%  
 - AUC: 0.58  
-- Precision@10: 0.55  
+- Precision@10: 0.55 
+Precision@10: Measures the proportion of relevant opportunities among the ten highest-ranked pages. This metric reflects the practical use case in which an editorial team may only have capacity to review a limited number of recommendations.
 
 **Limitations:**  
 - Biased toward already popular pages.  
@@ -125,9 +126,7 @@ For the baseline, I used a simple heuristic: rank pages by their **raw traffic c
 Random Forest Classifier — selected for its ability to handle non‑linear relationships, robustness to noisy features, and interpretability through feature importance.
 
 **Validation strategy:**  
-- Standard train/test split to measure generalization.  
-- Additional validation audit performed to confirm consistency across clients.  
-- Leakage review conducted to ensure no target‑derived or future information was included.  
+A time-aware train/test split was used, with earlier observations used for training and later observations reserved for testing. Client grouping was used to prevent overlap between training and test data. This better reflects the intended real-world prediction setting and reduces leakage risk.
 
 **Excluded features:**  
 - Target‑derived fields (e.g., trend_direction, trend_pct).  
@@ -135,8 +134,8 @@ Random Forest Classifier — selected for its ability to handle non‑linear rel
 - Product decision outputs that could bias the model.  
 
 **Target definition:**  
-Predict whether a page will exceed the median engagement threshold in the next time window.
-
+Predict whether a page is experiencing a declining performance trend based on the predefined is_declining_label. The label uses trend_direction == "down" as the decline proxy.
+    
 ## 7. Evaluation
 
 **Split strategy:**  
@@ -167,10 +166,6 @@ I used a time‑aware split, training on earlier periods and testing on later on
 - Content freshness (days since publication) mattered: newer pages had higher odds of trending.  
 - Topic category showed mixed effects: tech and entertainment pages performed better, while finance was less predictive.  
 
-**Cluster profiles (if clustering lane):**  
-- Cluster 1: High‑traffic, evergreen content.  
-- Cluster 2: Short‑lived trending spikes.  
-- Cluster 3: Niche but loyal audience.  
 
 **Surprises:**  
 - Social shares had less impact than expected once traffic growth was included.  
